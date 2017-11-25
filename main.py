@@ -258,7 +258,7 @@ def choose_operation_menu():
     print_title('Welcome to BATMm - ATM machine system')
     print "please choose your operation:"
     print "You have following options: "
-    print "create_account", "log_in"
+    print "create_account", "log_in", "exist"
     op = raw_input("--> ")
     if op == "create_account":
         create_account()
@@ -266,6 +266,8 @@ def choose_operation_menu():
         if log_in():
             while logged_in:
                 choose_operation()
+    elif op == "exist":
+        return False
     else:
         print "operation not exist!"
 
@@ -273,11 +275,11 @@ def choose_operation_menu():
 
 
 def choose_operation():
-
+    global logged_in;
     print_title('Thank you for logging into BATMm - ATM machine system')
     print "please choose your operation:"
     print "You have following options:"
-    print "show_info", "withdraw", "deposit", "transfer", "change_info", "change_pass"
+    print "show_info", "withdraw", "deposit", "transfer", "change_info", "change_pass", "log_out"
     op = raw_input("--> ")
     if op == "show_info":
         show_info()
@@ -291,6 +293,8 @@ def choose_operation():
         change_info()
     elif op == "change_pass":
         change_pass()
+    elif op == "log_out":
+        logged_in = False
     else:
         print "operation not exist!"
 
