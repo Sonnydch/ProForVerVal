@@ -24,12 +24,12 @@ def generate_random_account(size=6, chars=string.digits):
 def log_in():
     global logged_in
     print 'Please log in'
-    temp_user = raw_input('--> Username: ')
+    temp_user = raw_input('--> Username or Account Number: ')
     temp_pass = raw_input('--> Password: ')
     accounts = data["accounts"]
     valid = False
     for ac in accounts:
-        if ac["name"] == temp_user and ac["password"] == temp_pass:
+        if (ac["name"] == temp_user or ac["account"] == temp_user) and ac["password"] == temp_pass:
             logged_in = True
             valid = True
             break
@@ -61,11 +61,11 @@ def create_account():
 
 def show_info():
     print_title('Show Info')
-    account = raw_input("-->Account Number: ")
+    account = raw_input("-->Account Number or username: ")
     password = raw_input("--> Password: ")
     accounts = data["accounts"]
     for ac in accounts:
-        if ac["account"] == account and ac["password"] == password:
+        if (ac["account"] == account or ac["name"] == account) and ac["password"] == password:
             print "Balance:", ac["init_balance"]
             print "Address:", ac["address"]
             print "Telephone:", ac["telephone"]
@@ -140,17 +140,15 @@ def transfer():
     count_to = 0
     for ac in accounts:
         if ac["account"] == account_to and ac["name"] == name_to:
-            if int(ac["init_balance"]) > amount:
-                data["accounts"][count_to]["init_balance"] = str(int(ac["init_balance"]) + int(amount))
-            else:
-                print "Not enough balance to transfer!"
-            return
+            data["accounts"][count_to]["init_balance"] = str(int(ac["init_balance"]) + int(amount))
         count_to += 1
+
     with open('data.json', 'w') as f:
         json.dump(data, f)
 
 
 def change_info():
+
     print_title('Change Info: ')
     account = raw_input('--> Account Number: ')
 
@@ -275,7 +273,7 @@ def choose_operation_menu():
 
 
 def choose_operation():
-    global logged_in;
+    global logged_in
     print_title('Thank you for logging into BATMm - ATM machine system')
     print "please choose your operation:"
     print "You have following options:"
